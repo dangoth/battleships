@@ -6,11 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="7c6c01c7-6373-4c37-845b-1781c7e549a9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Direction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Direction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ShipService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ShipService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/GameTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/GameTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/PlacementTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PlacementTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,11 +73,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PlacementTests.shipCannotBePlacedInDeadZone" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PlacementTests.allShipsCanBePlacedCorrectly" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="battleships2" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="PlacementTests" />
-      <option name="METHOD_NAME" value="shipCannotBePlacedInDeadZone" />
+      <option name="METHOD_NAME" value="allShipsCanBePlacedCorrectly" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -90,9 +87,9 @@
       <list>
         <item itemvalue="JUnit.PlacementTests" />
         <item itemvalue="JUnit.GameTests" />
+        <item itemvalue="JUnit.PlacementTests.allShipsCanBePlacedCorrectly" />
         <item itemvalue="JUnit.GameTests.playerBoardIsUpdatedWhenGuessed" />
         <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.PlacementTests.shipCannotBePlacedInDeadZone" />
       </list>
     </recent_temporary>
   </component>

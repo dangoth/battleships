@@ -6,6 +6,7 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
+
 import java.io.ByteArrayOutputStream;
 
 
@@ -99,7 +100,5 @@ public class PlacementTests {
         // Then
         assertEquals(ShipService.getShips().size(), 3);
     }
-
-
 
 }

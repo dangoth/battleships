@@ -23,11 +23,11 @@ public class PlayerService {
     public void printEnemyGameBoard() {
         printStream.println("  " + String.valueOf(alphabet));
         IntStream.range(0, boardSize)
-                .forEach(i -> printStream.printf("%2s", i+1)
+                .forEach(i -> printStream.printf("%2s", i + 1)
                         .println(EnemyPlayer.gameBoard[i]));
         printStream.print("\n");
         printStream.flush();
-        }
+    }
 
     public char[][] getPlayerGameBoard() {
         return humanPlayer.getGameBoard();
@@ -36,7 +36,7 @@ public class PlayerService {
     public void printPlayerGameBoard() {
         printStream.println("  " + String.valueOf(alphabet));
         IntStream.range(0, boardSize)
-                .forEach(i -> printStream.printf("%2s", i+1)
+                .forEach(i -> printStream.printf("%2s", i + 1)
                         .println(HumanPlayer.gameBoard[i]));
         printStream.print("\n");
         printStream.flush();

@@ -30,8 +30,53 @@ public class Game {
     }
 
     /**
+     * Check EnemyPlayer.gameBoard to verify hit/miss/sink
+     *
+     * @param coords - Coordinates object with row and column index integers
+     * @return HumanPlayer.playerBoard updated with the guess
+     */
+    public static char[][] makeGuess(Coordinates coords) {
+        char[][] enemyGameBoard = playerService.getEnemyGameBoard();
+        char[][] playerGameBoard = playerService.getPlayerGameBoard();
+        int row = coords.getRow();
+        int col = coords.getColumn();
+
+        char unusedCoords = '-';
+        char miss = '-';
+        char hit = 'X';
+        if (playerGameBoard[row][col] != unusedCoords) {
+            playerService.printPlayerGameBoard();
+            printAndStore("You've already shot at these coordinates");
+            return playerGameBoard;
+
+        } else {
+            // missed shot
+            if (enemyGameBoard[row][col] == miss) {
+                playerGameBoard[row][col] = '0';
+                playerService.printPlayerGameBoard();
+                printAndStore("Miss");
+                return playerGameBoard;
+
+                // hit
+            } else if (enemyGameBoard[row][col] == hit) {
+                playerGameBoard[row][col] = 'X';
+                boolean sunk = strikeShip(coords);
+                if (sunk) {
+                    playerService.printPlayerGameBoard();
+                    printAndStore("Sink");
+                    return playerGameBoard;
+                }
+            }
+            playerService.printPlayerGameBoard();
+            printAndStore("Hit");
+            return playerGameBoard;
+        }
+    }
+
+    /**
      * If makeGuess() determines the guessed coordinates to be a ship's location, the coordinates value is removed
      * from listOfPlacedShips.
+     *
      * @param coords - Coordinates object with row and column index integers
      * @return true if the list (representing a ship) from which the guessed coordinates were removed is empty, i.e.
      * the ship has been sunk
@@ -49,48 +94,6 @@ public class Game {
         }
         return false;
     }
-
-    /**
-     * Check EnemyPlayer.gameBoard to verify hit/miss/sink
-     * @param coords - Coordinates object with row and column index integers
-     * @return HumanPlayer.playerBoard updated with the guess
-     */
-    public static char[][] makeGuess(Coordinates coords) {
-        char[][] enemyGameBoard = playerService.getEnemyGameBoard();
-        char[][] playerGameBoard = playerService.getPlayerGameBoard();
-        int row = coords.getRow();
-        int col = coords.getColumn();
-
-        // any other char than '-' denotes there's already been a hit or miss at these coords
-        if (playerGameBoard[row][col] != '-') {
-            playerService.printPlayerGameBoard();
-            printAndStore("You've already shot at these coordinates");
-            return playerGameBoard;
-
-        } else {
-            // missed shot
-            if (enemyGameBoard[row][col] == '-') {
-                playerGameBoard[row][col] = '0';
-                playerService.printPlayerGameBoard();
-                printAndStore("Miss");
-                return playerGameBoard;
-
-                // hit
-            } else if (enemyGameBoard[row][col] == 'X') {
-                playerGameBoard[row][col] = 'X';
-                boolean sunk = strikeShip(coords);
-                if (sunk) {
-                    playerService.printPlayerGameBoard();
-                    printAndStore("Sink");
-                    return playerGameBoard;
-                }
-            }
-            playerService.printPlayerGameBoard();
-            printAndStore("Hit");
-            return playerGameBoard;
-        }
-    }
-
 
     public static void getCoordinatesInput(Scanner scanner) {
         System.out.println("Input coordinates: ");

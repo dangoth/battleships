@@ -28,6 +28,7 @@ public class ShipService {
      * Calculate the offset from the board to avoid the bottom right corner where the ship cannot be placed in
      * either direction. Pass the randomized starting position to validateShipPosition() to determine legal directions
      * for the ship to be placed. Finally, call lockShipPlacement() to finalize the ship placement.
+     *
      * @param ship - ship to be placed
      * @return - an updated EnemyPlayer.gameBoard with the placed ship
      */
@@ -55,41 +56,17 @@ public class ShipService {
     /**
      * Given a Coordinates object with row nad col indexes, verify whether there is enough space to place the ship
      * vertically and horizontally, checking whether there is enough space and whether there are other ships in the way.
-     * @param coords - object containing integer indexes for gameboard access
+     *
+     * @param coords     - object containing integer indexes for gameboard access
      * @param shipLength
-     * @return enum Direction with legal ship placement directions
+     * @return enum Direction with a direction to place the ship in, or a confirmation to call for other random coords.
      */
     public static Direction validateShipPosition(Coordinates coords, int shipLength) {
-        boolean canPlaceHorizontally = true;
-        boolean canPlaceVertically = true;
-        int row = coords.getRow();
-        int col = coords.getColumn();
-        if (row + shipLength > boardSize - 1) {
-            canPlaceVertically = false;
-        } else {
-            // check for other ships in the way vertically
-            for (int i = row; i < row + shipLength; i++) {
-                if (EnemyPlayer.gameBoard[i][col] == 'X') {
-                    canPlaceVertically = false;
-                    break;
-                }
-            }
-        }
-
-        if (col + shipLength > boardSize - 1) {
-            canPlaceHorizontally = false;
-        } else {
-            // check for other ships in the way horizontally
-            for (int i = col; i < col + shipLength; i++) {
-                if (EnemyPlayer.gameBoard[row][i] == 'X') {
-                    canPlaceHorizontally = false;
-                    break;
-                }
-            }
-        }
-
+        boolean canPlaceVertically = validateVertically(coords, shipLength);
+        boolean canPlaceHorizontally = validateHorizontally(coords, shipLength);
         if (canPlaceHorizontally && canPlaceVertically) {
-            return Direction.values()[rand.nextInt(2)];
+            int randomChoice = rand.nextInt(2);
+            return Direction.values()[randomChoice];
         } else if (canPlaceHorizontally) {
             return Direction.HORIZONTAL;
         } else if (canPlaceVertically) {
@@ -97,6 +74,37 @@ public class ShipService {
         } else {
             return Direction.NEITHER;
         }
+    }
+
+    public static boolean validateVertically(Coordinates coords, int shipLength) {
+        int row = coords.getRow();
+        int col = coords.getColumn();
+        if (row + shipLength > boardSize - 1) {
+            return false;
+        } else {
+            for (int i = row; i < row + shipLength; i++) {
+                if (EnemyPlayer.gameBoard[i][col] == 'X') {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static boolean validateHorizontally(Coordinates coords, int shipLength) {
+        int row = coords.getRow();
+        int col = coords.getColumn();
+        if (col + shipLength > boardSize - 1) {
+            return false;
+        } else {
+            for (int i = col; i < col + shipLength; i++) {
+                if (EnemyPlayer.gameBoard[row][i] == 'X') {
+                    return false;
+
+                }
+            }
+        }
+        return true;
     }
 
     public static char[][] lockShipPlacement(Ship ship, Coordinates coords, Direction direction) {
@@ -109,7 +117,6 @@ public class ShipService {
                 String shipCoords = row + String.valueOf(col + i);
                 shipCoordList.add(shipCoords);
             }
-
         } else if (direction == Direction.VERTICAL) {
             for (int i = 0; i < ship.getShipLength(); i++) {
                 EnemyPlayer.gameBoard[row + i][col] = 'X';
@@ -117,7 +124,6 @@ public class ShipService {
                 shipCoordList.add(shipCoords);
             }
         }
-
         ships.add(shipCoordList);
         return EnemyPlayer.gameBoard;
     }
