@@ -59,24 +59,24 @@ public class GameTests {
     @Test
     public void playerCanMakeAGuess() {
         // When
-        Game.makeGuess("A5");
+        Game.makeGuess(new Coordinates(0, 4));
         // Then
         assertEquals("Miss", Game.getLastOutput());
     }
 
     @Test
-    public void playerBoardIsUpdatedWhenGuess() {
+    public void playerBoardIsUpdatedWhenGuessed() {
         // When
-        Game.makeGuess("A5");
+        Game.makeGuess(new Coordinates(0, 4));
         // Then
-        assertEquals('0', playerService.getPlayerGameBoard()[4][0]);
+        assertEquals('0', playerService.getPlayerGameBoard()[0][4]);
     }
 
     @Test
     public void guessingTheSameFieldTwiceShowsMessage() {
         // When
-        Game.makeGuess("A5");
-        Game.makeGuess("A5");
+        Game.makeGuess(new Coordinates(0, 4));
+        Game.makeGuess(new Coordinates(0, 4));
         // Then
         assertEquals("You've already shot at these coordinates", Game.getLastOutput());
     }
@@ -85,11 +85,10 @@ public class GameTests {
     public void shipCanBeHit() {
         // When
         Ship battleship = new Battleship();
-        Coordinates coords = new Coordinates(0, 0);
-        ShipService.lockShipPlacement(battleship, coords, Direction.HORIZONTAL);
+        ShipService.lockShipPlacement(battleship, new Coordinates(0, 0), Direction.HORIZONTAL);
         Game.listOfPlacedShips = ShipService.getShips();
         // THen
-        Game.makeGuess("A1");
+        Game.makeGuess(new Coordinates(0, 0));
         assertEquals("Hit", Game.getLastOutput());
     }
 
@@ -99,15 +98,14 @@ public class GameTests {
         Ship battleship = new Battleship();
         Ship destroyer = new Destroyer();
         ShipService.placeShip(destroyer);
-        Coordinates coords = new Coordinates(0, 0);
-        ShipService.lockShipPlacement(battleship, coords, Direction.HORIZONTAL);
+        ShipService.lockShipPlacement(battleship, new Coordinates(0, 0), Direction.HORIZONTAL);
         Game.listOfPlacedShips = ShipService.getShips();
         // Then
-        Game.makeGuess("A1");
-        Game.makeGuess("B1");
-        Game.makeGuess("C1");
-        Game.makeGuess("D1");
-        Game.makeGuess("E1");
+        Game.makeGuess(new Coordinates(0, 0));
+        Game.makeGuess(new Coordinates(0, 1));
+        Game.makeGuess(new Coordinates(0, 2));
+        Game.makeGuess(new Coordinates(0, 3));
+        Game.makeGuess(new Coordinates(0, 4));
         assertEquals("Sink", Game.getLastOutput());
 
     }
@@ -116,14 +114,13 @@ public class GameTests {
     public void gameCanBeWon() {
         // When
         Ship battleship = new Battleship();
-        Coordinates coords = new Coordinates(5, 5);
-        ShipService.lockShipPlacement(battleship, coords, Direction.VERTICAL);
+        ShipService.lockShipPlacement(battleship, new Coordinates(5, 5), Direction.VERTICAL);
         Game.listOfPlacedShips = ShipService.getShips();
-        Game.makeGuess("F6");
-        Game.makeGuess("F7");
-        Game.makeGuess("F8");
-        Game.makeGuess("F9");
-        Game.makeGuess("F10");
+        Game.makeGuess(new Coordinates(5, 5));
+        Game.makeGuess(new Coordinates(6, 5));
+        Game.makeGuess(new Coordinates(7, 5));
+        Game.makeGuess(new Coordinates(8, 5));
+        Game.makeGuess(new Coordinates(9, 5));
         // Then
         assertTrue(Game.listOfPlacedShips.isEmpty());
     }

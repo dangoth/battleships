@@ -1,3 +1,3 @@
 public enum Direction {
-    VERTICAL, HORIZONTAL, EITHER, NEITHER
+    VERTICAL, HORIZONTAL, NEITHER
 }

@@ -82,7 +82,7 @@ public class PlacementTests {
         Coordinates coords3 = new Coordinates(4, 3);
         ShipService.lockShipPlacement(battleship, coords, Direction.HORIZONTAL);
         ShipService.lockShipPlacement(battleship2, coords2, Direction.HORIZONTAL);
-        ShipService.lockShipPlacement(destroyer, coords3, Direction.EITHER);
+        ShipService.lockShipPlacement(destroyer, coords3, Direction.VERTICAL);
         // Then
         assertEquals(ShipService.getShips().size(), 3);
     }

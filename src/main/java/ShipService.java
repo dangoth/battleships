@@ -53,8 +53,8 @@ public class ShipService {
     }
 
     /**
-     * Given indexes row and col, verify whether there is enough space to place the ship vertically and horizontally,
-     * checking whether there is enough space and whether there are other ships in the way.
+     * Given a Coordinates object with row nad col indexes, verify whether there is enough space to place the ship
+     * vertically and horizontally, checking whether there is enough space and whether there are other ships in the way.
      * @param coords - object containing integer indexes for gameboard access
      * @param shipLength
      * @return enum Direction with legal ship placement directions
