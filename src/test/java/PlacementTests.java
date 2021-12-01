@@ -11,7 +11,6 @@ import java.io.ByteArrayOutputStream;
 
 public class PlacementTests {
 
-    // objects instantiated to populate fields
     private final ShipService shipService = new ShipService();
     private final PlayerService playerService = new PlayerService();
     private final Game game = new Game();
@@ -46,10 +45,18 @@ public class PlacementTests {
         assertEquals(playerService.getEnemyGameBoard()[2][2], 'X');
     }
 
+    @Test
+    public void shipCannotBePlacedInDeadZone() {
+        // When
+        Destroyer destroyer = new Destroyer();
+        Coordinates coords = new Coordinates(9, 9);
+        // Then
+        Direction direction = ShipService.validateShipPosition(coords, destroyer.getShipLength());
+        assertEquals(direction, Direction.NEITHER);
+    }
 
     @Test
-    //todo przezwać na collide with another ship, dodać placement w dolnym kwadracie
-    public void shipCannotBePlacedIncorrectly() {
+    public void shipCannotCollideWithOtherShips() {
         // When
         Ship battleship = new Battleship();
         Ship battleship2 = new Battleship();
@@ -70,13 +77,13 @@ public class PlacementTests {
         Ship battleship = new Battleship();
         Ship battleship2 = new Battleship();
         Ship destroyer = new Destroyer();
-        // Then
         Coordinates coords = new Coordinates(0, 0);
         Coordinates coords2 = new Coordinates(2, 2);
         Coordinates coords3 = new Coordinates(4, 3);
         ShipService.lockShipPlacement(battleship, coords, Direction.HORIZONTAL);
         ShipService.lockShipPlacement(battleship2, coords2, Direction.HORIZONTAL);
         ShipService.lockShipPlacement(destroyer, coords3, Direction.EITHER);
+        // Then
         assertEquals(ShipService.getShips().size(), 3);
     }
 
@@ -86,10 +93,10 @@ public class PlacementTests {
         Ship battleship = new Battleship();
         Ship battleship2 = new Battleship();
         Ship destroyer = new Destroyer();
-        // Then
         ShipService.placeShip(battleship);
         ShipService.placeShip(battleship2);
         ShipService.placeShip(destroyer);
+        // Then
         assertEquals(ShipService.getShips().size(), 3);
     }
 

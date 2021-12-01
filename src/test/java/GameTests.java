@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 @TestInstance(PER_CLASS)
 public class GameTests {
 
-    // Instantiated to populate class fields
     private final Game game = new Game();
     private final ShipService shipService = new ShipService();
     private final PlayerService playerService = new PlayerService();
@@ -45,7 +44,6 @@ public class GameTests {
         );
     }
 
-
     @ParameterizedTest(name = "{index} ==> {2}: is {0} valid coordinates? {1}")
     @MethodSource("testCases")
     public void testRegex(String input, boolean expected, String description) {
@@ -62,6 +60,7 @@ public class GameTests {
     public void playerCanMakeAGuess() {
         // When
         Game.makeGuess("A5");
+        // Then
         assertEquals("Miss", Game.getLastOutput());
     }
 
@@ -69,34 +68,41 @@ public class GameTests {
     public void playerBoardIsUpdatedWhenGuess() {
         // When
         Game.makeGuess("A5");
+        // Then
         assertEquals('0', playerService.getPlayerGameBoard()[4][0]);
     }
 
     @Test
     public void guessingTheSameFieldTwiceShowsMessage() {
+        // When
         Game.makeGuess("A5");
         Game.makeGuess("A5");
+        // Then
         assertEquals("You've already shot at these coordinates", Game.getLastOutput());
     }
 
     @Test
     public void shipCanBeHit() {
+        // When
         Ship battleship = new Battleship();
         Coordinates coords = new Coordinates(0, 0);
         ShipService.lockShipPlacement(battleship, coords, Direction.HORIZONTAL);
         Game.listOfPlacedShips = ShipService.getShips();
+        // THen
         Game.makeGuess("A1");
         assertEquals("Hit", Game.getLastOutput());
     }
 
     @Test
     public void shipCanBeSunk() {
+        // When
         Ship battleship = new Battleship();
         Ship destroyer = new Destroyer();
         ShipService.placeShip(destroyer);
         Coordinates coords = new Coordinates(0, 0);
         ShipService.lockShipPlacement(battleship, coords, Direction.HORIZONTAL);
         Game.listOfPlacedShips = ShipService.getShips();
+        // Then
         Game.makeGuess("A1");
         Game.makeGuess("B1");
         Game.makeGuess("C1");
@@ -108,6 +114,7 @@ public class GameTests {
 
     @Test
     public void gameCanBeWon() {
+        // When
         Ship battleship = new Battleship();
         Coordinates coords = new Coordinates(5, 5);
         ShipService.lockShipPlacement(battleship, coords, Direction.VERTICAL);
@@ -117,6 +124,7 @@ public class GameTests {
         Game.makeGuess("F8");
         Game.makeGuess("F9");
         Game.makeGuess("F10");
+        // Then
         assertTrue(Game.listOfPlacedShips.isEmpty());
     }
 
