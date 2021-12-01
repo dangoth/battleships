@@ -59,7 +59,8 @@ public class GameTests {
     @Test
     public void shipCanBeHit() {
         Ship battleship = new Battleship();
-        ShipService.lockShipPlacement(playerService.getEnemyGameBoard(), battleship, 0, 0, Direction.HORIZONTAL);
+        Coordinates coords = new Coordinates(0, 0);
+        ShipService.lockShipPlacement(battleship, coords, Direction.HORIZONTAL);
         Game.listOfPlacedShips = ShipService.getShips();
         Game.makeGuess("A1");
         assertEquals("Hit", Game.getLastOutput());
@@ -70,7 +71,8 @@ public class GameTests {
         Ship battleship = new Battleship();
         Ship destroyer = new Destroyer();
         ShipService.placeShip(destroyer);
-        ShipService.lockShipPlacement(playerService.getEnemyGameBoard(), battleship, 0, 0, Direction.HORIZONTAL);
+        Coordinates coords = new Coordinates(0, 0);
+        ShipService.lockShipPlacement(battleship, coords, Direction.HORIZONTAL);
         Game.listOfPlacedShips = ShipService.getShips();
         Game.makeGuess("A1");
         Game.makeGuess("B1");
@@ -84,7 +86,8 @@ public class GameTests {
     @Test
     public void gameCanBeWon() {
         Ship battleship = new Battleship();
-        ShipService.lockShipPlacement(playerService.getEnemyGameBoard(), battleship, 5, 5, Direction.VERTICAL);
+        Coordinates coords = new Coordinates(5, 5);
+        ShipService.lockShipPlacement(battleship, coords, Direction.VERTICAL);
         Game.listOfPlacedShips = ShipService.getShips();
         Game.makeGuess("F6");
         Game.makeGuess("F7");

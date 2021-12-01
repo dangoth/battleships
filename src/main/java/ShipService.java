@@ -38,16 +38,16 @@ public class ShipService {
         // transform into index coordinates
         int col = (pos % 10 == 0) ? 0 : (pos % 10 - 1);
         int row = (pos - col) / 10 - 1;
-
-        Direction canPlaceShip = validateShipPosition(service.getEnemyGameBoard(), row, col, ship.getShipLength());
+        Coordinates coords = new Coordinates(row, col);
+        Direction canPlaceShip = validateShipPosition(coords, ship.getShipLength());
         if (canPlaceShip == Direction.NEITHER) {
             EnemyPlayer.gameBoard = placeShip(ship);
         } else if (canPlaceShip == Direction.EITHER) {
-            EnemyPlayer.gameBoard = lockShipPlacement(service.getEnemyGameBoard(), ship, row, col, Direction.values()[rand.nextInt(2)]);
+            EnemyPlayer.gameBoard = lockShipPlacement(ship, coords, Direction.values()[rand.nextInt(2)]);
         } else if (canPlaceShip == Direction.HORIZONTAL) {
-            EnemyPlayer.gameBoard = lockShipPlacement(service.getEnemyGameBoard(), ship, row, col, Direction.HORIZONTAL);
+            EnemyPlayer.gameBoard = lockShipPlacement(ship, coords, Direction.HORIZONTAL);
         } else if (canPlaceShip == Direction.VERTICAL) {
-            EnemyPlayer.gameBoard = lockShipPlacement(service.getEnemyGameBoard(), ship, row, col, Direction.VERTICAL);
+            EnemyPlayer.gameBoard = lockShipPlacement(ship, coords, Direction.VERTICAL);
         }
         return EnemyPlayer.gameBoard;
     }
@@ -55,15 +55,15 @@ public class ShipService {
     /**
      * Given indexes row and col, verify whether there is enough space to place the ship vertically and horizontally,
      * checking whether there is enough space and whether there are other ships in the way.
-     * @param board - EnemyPlayer.gameBoard with currently placed ships
-     * @param row
-     * @param col
+     * @param coords - object containing integer indexes for gameboard access
      * @param shipLength
      * @return enum Direction with legal ship placement directions
      */
-    public static Direction validateShipPosition(char[][] board, int row, int col, int shipLength) {
+    public static Direction validateShipPosition(Coordinates coords, int shipLength) {
         boolean canPlaceHorizontally = true;
         boolean canPlaceVertically = true;
+        int row = coords.getRow();
+        int col = coords.getColumn();
         if (row + shipLength > boardSize - 1) {
             canPlaceVertically = false;
         } else {
@@ -75,6 +75,7 @@ public class ShipService {
                 }
             }
         }
+
         if (col + shipLength > boardSize - 1) {
             canPlaceHorizontally = false;
         } else {
@@ -86,6 +87,7 @@ public class ShipService {
                 }
             }
         }
+
         if (canPlaceHorizontally && canPlaceVertically) {
             return Direction.EITHER;
         } else if (canPlaceHorizontally) {
@@ -97,24 +99,27 @@ public class ShipService {
         }
     }
 
-    public static char[][] lockShipPlacement(char[][] board, Ship ship, int row, int col, Direction direction) {
-        List<String> shipcoords = new ArrayList<String>();
+    public static char[][] lockShipPlacement(Ship ship, Coordinates coords, Direction direction) {
+        List<String> shipCoordList = new ArrayList<String>();
+        int row = coords.getRow();
+        int col = coords.getColumn();
         if (direction == Direction.HORIZONTAL) {
             for (int i = 0; i < ship.getShipLength(); i++) {
                 EnemyPlayer.gameBoard[row][col + i] = 'X';
-                String coords = row + String.valueOf(col + i);
-                shipcoords.add(coords);
+                String shipCoords = row + String.valueOf(col + i);
+                shipCoordList.add(shipCoords);
             }
+
         } else if (direction == Direction.VERTICAL) {
             for (int i = 0; i < ship.getShipLength(); i++) {
                 EnemyPlayer.gameBoard[row + i][col] = 'X';
-                String coords = String.valueOf(row + i) + col;
-                shipcoords.add(coords);
+                String shipCoords = String.valueOf(row + i) + col;
+                shipCoordList.add(shipCoords);
             }
         }
-        ships.add(shipcoords);
+
+        ships.add(shipCoordList);
         return EnemyPlayer.gameBoard;
     }
-
 
 }

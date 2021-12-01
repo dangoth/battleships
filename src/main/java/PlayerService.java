@@ -28,7 +28,6 @@ public class PlayerService {
         printStream.flush();
         }
 
-
     public char[][] getPlayerGameBoard() {
         return humanPlayer.getGameBoard();
     }

@@ -25,7 +25,8 @@ public class Game {
     }
 
     public static String getLastOutput() {
-        return stdoutHistory.get(stdoutHistory.size() - 1);
+        String last = stdoutHistory.get(stdoutHistory.size() - 1);
+        return last;
     }
 
     /**
@@ -39,22 +40,26 @@ public class Game {
         char coord = coordinates.charAt(0);
         int row = Integer.parseInt(coordinates.substring(1)) - 1;
         int col = coord - 'A';
+
         if (playerGameBoard[row][col] != '-') {
             playerService.printPlayerGameBoard();
             printAndStore("You've already shot at these coordinates");
             return playerGameBoard;
         } else {
+
             if (enemyGameBoard[row][col] == '-') {
                 playerGameBoard[row][col] = '0';
                 playerService.printPlayerGameBoard();
                 printAndStore("Miss");
                 return playerGameBoard;
+
             } else if (enemyGameBoard[row][col] == 'X') {
                 playerGameBoard[row][col] = 'X';
                 String coords = String.valueOf(row) + col;
                 for (List<String> listOfPlacedShip : listOfPlacedShips) {
                     if (listOfPlacedShip.contains(coords)) {
                         listOfPlacedShip.remove(coords);
+
                         if (listOfPlacedShip.isEmpty()) {
                             listOfPlacedShips.remove(listOfPlacedShip);
                             playerService.printPlayerGameBoard();
@@ -70,7 +75,6 @@ public class Game {
         }
         return playerGameBoard;
     }
-
 
     public static void getCoordinatesInput(Scanner scanner) {
         System.out.println("Input coordinates: ");
@@ -91,10 +95,7 @@ public class Game {
         ShipService.placeShip(destroyer2);
     }
 
-
-    public static void main(String[] args) {
-        playerService = new PlayerService();
-        shipService = new ShipService();
+    public static void play() {
         scanner = new Scanner(System.in);
         setUpGame();
         playerService.printPlayerGameBoard();

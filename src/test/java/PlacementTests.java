@@ -11,6 +11,7 @@ import java.io.ByteArrayOutputStream;
 
 public class PlacementTests {
 
+    // objects instantiated to populate fields
     private final ShipService shipService = new ShipService();
     private final PlayerService playerService = new PlayerService();
     private final Game game = new Game();
@@ -29,32 +30,37 @@ public class PlacementTests {
     public void shipCanBePlacedCorrectly() {
         // When
         Ship battleship = new Battleship();
-        shipService.lockShipPlacement(playerService.getEnemyGameBoard(), battleship, 2, 2, Direction.HORIZONTAL);
+        Coordinates coords = new Coordinates(2, 2);
+        ShipService.lockShipPlacement(battleship, coords, Direction.HORIZONTAL);
         // Then
-        assertThat(shipService.getShips(), notNullValue());
+        assertThat(ShipService.getShips(), notNullValue());
     }
 
     @Test
     public void enemyBoardIsUpdatedOnShipPlacement() {
         // When
         Ship battleship = new Battleship();
-        shipService.lockShipPlacement(playerService.getEnemyGameBoard(), battleship, 2, 2, Direction.HORIZONTAL);
+        Coordinates coords = new Coordinates(2, 2);
+        ShipService.lockShipPlacement(battleship, coords, Direction.HORIZONTAL);
         // Then
         assertEquals(playerService.getEnemyGameBoard()[2][2], 'X');
     }
 
 
     @Test
+    //todo przezwać na collide with another ship, dodać placement w dolnym kwadracie
     public void shipCannotBePlacedIncorrectly() {
         // When
         Ship battleship = new Battleship();
         Ship battleship2 = new Battleship();
         Ship destroyer = new Destroyer();
-        shipService.lockShipPlacement(playerService.getEnemyGameBoard(), battleship, 2, 3, Direction.HORIZONTAL);
-        shipService.lockShipPlacement(playerService.getEnemyGameBoard(), battleship2, 0, 5, Direction.VERTICAL);
+        Coordinates coords = new Coordinates(2, 3);
+        Coordinates coords2 = new Coordinates(0, 5);
+        ShipService.lockShipPlacement(battleship, coords, Direction.HORIZONTAL);
+        ShipService.lockShipPlacement(battleship2, coords2, Direction.VERTICAL);
         // Then
-        Direction destroyerDirection = shipService.validateShipPosition(playerService.getEnemyGameBoard(),
-                1, 3, destroyer.getShipLength());
+        Coordinates coords3 = new Coordinates(1, 3);
+        Direction destroyerDirection = ShipService.validateShipPosition(coords3, destroyer.getShipLength());
         assertEquals(destroyerDirection, Direction.NEITHER);
     }
 
@@ -65,10 +71,13 @@ public class PlacementTests {
         Ship battleship2 = new Battleship();
         Ship destroyer = new Destroyer();
         // Then
-        shipService.lockShipPlacement(playerService.getEnemyGameBoard(), battleship, 0, 0, Direction.HORIZONTAL);
-        shipService.lockShipPlacement(playerService.getEnemyGameBoard(), battleship2, 2, 2, Direction.HORIZONTAL);
-        shipService.lockShipPlacement(playerService.getEnemyGameBoard(), destroyer, 4, 3, Direction.EITHER);
-        assertEquals(shipService.getShips().size(), 3);
+        Coordinates coords = new Coordinates(0, 0);
+        Coordinates coords2 = new Coordinates(2, 2);
+        Coordinates coords3 = new Coordinates(4, 3);
+        ShipService.lockShipPlacement(battleship, coords, Direction.HORIZONTAL);
+        ShipService.lockShipPlacement(battleship2, coords2, Direction.HORIZONTAL);
+        ShipService.lockShipPlacement(destroyer, coords3, Direction.EITHER);
+        assertEquals(ShipService.getShips().size(), 3);
     }
 
     @Test
@@ -78,10 +87,10 @@ public class PlacementTests {
         Ship battleship2 = new Battleship();
         Ship destroyer = new Destroyer();
         // Then
-        shipService.placeShip(battleship);
-        shipService.placeShip(battleship2);
-        shipService.placeShip(destroyer);
-        assertEquals(shipService.getShips().size(), 3);
+        ShipService.placeShip(battleship);
+        ShipService.placeShip(battleship2);
+        ShipService.placeShip(destroyer);
+        assertEquals(ShipService.getShips().size(), 3);
     }
 
 
