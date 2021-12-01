@@ -35,15 +35,15 @@ public class ShipService {
         // determine safe range from bottom right corner
         int offset = boardSize - ship.getShipLength();
         int pos = rand.nextInt(offset * 11 + 1) + 11;
+
         // transform into index coordinates
         int col = (pos % 10 == 0) ? 0 : (pos % 10 - 1);
         int row = (pos - col) / 10 - 1;
         Coordinates coords = new Coordinates(row, col);
+
         Direction canPlaceShip = validateShipPosition(coords, ship.getShipLength());
         if (canPlaceShip == Direction.NEITHER) {
             EnemyPlayer.gameBoard = placeShip(ship);
-        } else if (canPlaceShip == Direction.EITHER) {
-            EnemyPlayer.gameBoard = lockShipPlacement(ship, coords, Direction.values()[rand.nextInt(2)]);
         } else if (canPlaceShip == Direction.HORIZONTAL) {
             EnemyPlayer.gameBoard = lockShipPlacement(ship, coords, Direction.HORIZONTAL);
         } else if (canPlaceShip == Direction.VERTICAL) {
@@ -89,7 +89,7 @@ public class ShipService {
         }
 
         if (canPlaceHorizontally && canPlaceVertically) {
-            return Direction.EITHER;
+            return Direction.values()[rand.nextInt(2)];
         } else if (canPlaceHorizontally) {
             return Direction.HORIZONTAL;
         } else if (canPlaceVertically) {

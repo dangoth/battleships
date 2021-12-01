@@ -13,4 +13,5 @@ public class EnemyPlayer {
     public static char[][] getGameBoard() {
         return gameBoard;
     }
+
 }

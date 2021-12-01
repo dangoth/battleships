@@ -19,6 +19,7 @@ public class PlayerService {
         return enemyPlayer.getGameBoard();
     }
 
+    // debug method
     public void printEnemyGameBoard() {
         printStream.println("  " + String.valueOf(alphabet));
         IntStream.range(0, boardSize)

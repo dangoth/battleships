@@ -13,7 +13,6 @@ public class Game {
     private static final LinkedList<String> stdoutHistory = new LinkedList<String>();
     private static Scanner scanner;
 
-    // constructor for GameTests purpose
     public Game() {
         playerService = new PlayerService();
         shipService = new ShipService();
@@ -41,6 +40,7 @@ public class Game {
         int row = Integer.parseInt(coordinates.substring(1)) - 1;
         int col = coord - 'A';
 
+        // any other char than '-' denotes there's already been a hit or miss at these coords
         if (playerGameBoard[row][col] != '-') {
             playerService.printPlayerGameBoard();
             printAndStore("You've already shot at these coordinates");
@@ -105,4 +105,5 @@ public class Game {
         }
         System.out.println("You've won the game!");
     }
+
 }
