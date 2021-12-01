@@ -1,6 +1,5 @@
 import Ships.Battleship;
 import Ships.Destroyer;
-import Ships.Ship;
 
 import java.util.LinkedList;
 import java.util.List;

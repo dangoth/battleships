@@ -2,13 +2,6 @@ import Ships.Battleship;
 import Ships.Destroyer;
 import Ships.Ship;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.util.Scanner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
@@ -17,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 
 public class GameTests {
 
+    // Instantiated to populate class fields
     private final Game game = new Game();
     private final ShipService shipService = new ShipService();
     private final PlayerService playerService = new PlayerService();
