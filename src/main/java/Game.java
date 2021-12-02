@@ -9,14 +9,11 @@ import java.util.Scanner;
 public class Game {
 
     private static PlayerService playerService;
-    private static ShipService shipService;
     static List<List<String>> listOfPlacedShips;
     private static final LinkedList<String> stdoutHistory = new LinkedList<String>();
-    private static Scanner scanner;
 
     public Game() {
         playerService = new PlayerService();
-        shipService = new ShipService();
     }
 
     public static void printAndStore(String s) {
@@ -42,36 +39,29 @@ public class Game {
         int col = coords.getColumn();
 
         char unusedCoords = '-';
-        char miss = '-';
+        char miss = '0';
         char hit = 'X';
+
         if (playerGameBoard[row][col] != unusedCoords) {
-            playerService.printPlayerGameBoard();
-            printAndStore("You've already shot at these coordinates");
+            outputShotResult("Already shot");
             return playerGameBoard;
-
-        } else {
-            // missed shot
-            if (enemyGameBoard[row][col] == miss) {
-                playerGameBoard[row][col] = '0';
-                playerService.printPlayerGameBoard();
-                printAndStore("Miss");
+        } else if (enemyGameBoard[row][col] == miss) {
+            playerGameBoard[row][col] = '0';
+            outputShotResult("Miss");
+            return playerGameBoard;
+        } else if (enemyGameBoard[row][col] == hit) {
+            playerGameBoard[row][col] = 'X';
+            boolean sunk = strikeShip(coords);
+            if (sunk) {
+                outputShotResult("Sink");
                 return playerGameBoard;
-
-                // hit
-            } else if (enemyGameBoard[row][col] == hit) {
-                playerGameBoard[row][col] = 'X';
-                boolean sunk = strikeShip(coords);
-                if (sunk) {
-                    playerService.printPlayerGameBoard();
-                    printAndStore("Sink");
-                    return playerGameBoard;
-                }
             }
-            playerService.printPlayerGameBoard();
-            printAndStore("Hit");
+            outputShotResult("Hit");
             return playerGameBoard;
         }
+        return playerGameBoard;
     }
+
 
     /**
      * If makeGuess() determines the guessed coordinates to be a ship's location, the coordinates value is removed
@@ -93,6 +83,22 @@ public class Game {
             }
         }
         return false;
+    }
+
+    public static void outputShotResult(String shotResult) {
+        if (shotResult.equals("Already shot")) {
+            playerService.printPlayerGameBoard();
+            printAndStore("You've already shot at these coordinates");
+        } else if (shotResult.equals("Miss")) {
+            playerService.printPlayerGameBoard();
+            printAndStore("Miss");
+        } else if (shotResult.equals("Sink")) {
+            playerService.printPlayerGameBoard();
+            printAndStore("Sink");
+        } else if (shotResult.equals("Hit")) {
+            playerService.printPlayerGameBoard();
+            printAndStore("Hit");
+        }
     }
 
     public static void getCoordinatesInput(Scanner scanner) {
@@ -124,11 +130,11 @@ public class Game {
     }
 
     public static void play() {
-        scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         setUpGame();
         playerService.printPlayerGameBoard();
-        while (!ShipService.getShips().isEmpty()) {
-            listOfPlacedShips = ShipService.getShips();
+        while (!ShipService.getActiveShips().isEmpty()) {
+            listOfPlacedShips = ShipService.getActiveShips();
             getCoordinatesInput(scanner);
         }
         System.out.println("You've won the game!");

@@ -1,6 +1,5 @@
 import Ships.Ship;
 
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -9,18 +8,14 @@ public class ShipService {
 
     private static Random rand;
     private static final int boardSize = 10;
-    private static PlayerService service;
     private static List<List<String>> ships;
-    private final PrintStream printStream;
 
     public ShipService() {
         rand = new Random();
         ships = new ArrayList<>();
-        printStream = new PrintStream(System.out);
-        service = new PlayerService();
     }
 
-    public static List<List<String>> getShips() {
+    public static List<List<String>> getActiveShips() {
         return ships;
     }
 
@@ -58,7 +53,7 @@ public class ShipService {
      * vertically and horizontally, checking whether there is enough space and whether there are other ships in the way.
      *
      * @param coords     - object containing integer indexes for gameboard access
-     * @param shipLength
+     * @param shipLength - length of ship being validated
      * @return enum Direction with a direction to place the ship in, or a confirmation to call for other random coords.
      */
     public static Direction validateShipPosition(Coordinates coords, int shipLength) {
@@ -108,7 +103,7 @@ public class ShipService {
     }
 
     public static char[][] lockShipPlacement(Ship ship, Coordinates coords, Direction direction) {
-        List<String> shipCoordList = new ArrayList<String>();
+        List<String> shipCoordList = new ArrayList<>();
         int row = coords.getRow();
         int col = coords.getColumn();
         if (direction == Direction.HORIZONTAL) {

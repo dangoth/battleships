@@ -7,15 +7,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 
-import java.io.ByteArrayOutputStream;
-
 
 public class PlacementTests {
 
     private final ShipService shipService = new ShipService();
     private final PlayerService playerService = new PlayerService();
     private final Game game = new Game();
-    private final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
 
     @Test
@@ -33,7 +30,7 @@ public class PlacementTests {
         Coordinates coords = new Coordinates(2, 2);
         ShipService.lockShipPlacement(battleship, coords, Direction.HORIZONTAL);
         // Then
-        assertThat(ShipService.getShips(), notNullValue());
+        assertThat(ShipService.getActiveShips(), notNullValue());
     }
 
     @Test
@@ -85,7 +82,7 @@ public class PlacementTests {
         ShipService.lockShipPlacement(battleship2, coords2, Direction.HORIZONTAL);
         ShipService.lockShipPlacement(destroyer, coords3, Direction.VERTICAL);
         // Then
-        assertEquals(ShipService.getShips().size(), 3);
+        assertEquals(ShipService.getActiveShips().size(), 3);
     }
 
     @Test
@@ -98,7 +95,7 @@ public class PlacementTests {
         ShipService.placeShip(battleship2);
         ShipService.placeShip(destroyer);
         // Then
-        assertEquals(ShipService.getShips().size(), 3);
+        assertEquals(ShipService.getActiveShips().size(), 3);
     }
 
 }

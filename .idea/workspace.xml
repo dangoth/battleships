@@ -6,8 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="7c6c01c7-6373-4c37-845b-1781c7e549a9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/EnemyPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EnemyPlayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/PlayerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/PlayerService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ShipService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ShipService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/GameTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/GameTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/PlacementTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PlacementTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

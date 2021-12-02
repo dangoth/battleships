@@ -3,20 +3,18 @@ import java.util.stream.IntStream;
 
 public class PlayerService {
 
-    private final EnemyPlayer enemyPlayer;
-    private final HumanPlayer humanPlayer;
-    private PrintStream printStream;
+    private final PrintStream printStream;
     private final int boardSize = 10;
     private final char[] alphabet = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
 
     public PlayerService() {
-        enemyPlayer = new EnemyPlayer();
-        humanPlayer = new HumanPlayer();
+        EnemyPlayer enemyPlayer = new EnemyPlayer();
+        HumanPlayer humanPlayer = new HumanPlayer();
         printStream = new PrintStream(System.out);
     }
 
     public char[][] getEnemyGameBoard() {
-        return enemyPlayer.getGameBoard();
+        return EnemyPlayer.getGameBoard();
     }
 
     // debug method
@@ -30,7 +28,7 @@ public class PlayerService {
     }
 
     public char[][] getPlayerGameBoard() {
-        return humanPlayer.getGameBoard();
+        return HumanPlayer.getGameBoard();
     }
 
     public void printPlayerGameBoard() {

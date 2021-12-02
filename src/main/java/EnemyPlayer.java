@@ -7,7 +7,7 @@ public class EnemyPlayer {
     public EnemyPlayer() {
         gameBoard = new char[10][];
         IntStream.range(0, 10)
-                .forEach(i -> gameBoard[i] = new char[]{'-', '-', '-', '-', '-', '-', '-', '-', '-', '-'});
+                .forEach(i -> gameBoard[i] = new char[]{'0', '0', '0', '0', '0', '0', '0', '0', '0', '0'});
     }
 
     public static char[][] getGameBoard() {

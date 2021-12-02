@@ -2,6 +2,7 @@ import Ships.Battleship;
 import Ships.Destroyer;
 import Ships.Ship;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -11,8 +12,6 @@ import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 
 @TestInstance(PER_CLASS)
@@ -48,7 +47,7 @@ public class GameTests {
     @MethodSource("testCases")
     public void testRegex(String input, boolean expected, String description) {
         Boolean matches = input.matches(REGEX);
-        assertEquals(expected, matches);
+        Assertions.assertEquals(expected, matches);
     }
 
     @Test
@@ -61,7 +60,7 @@ public class GameTests {
         // When
         Game.makeGuess(new Coordinates(0, 4));
         // Then
-        assertEquals("Miss", Game.getLastOutput());
+        Assertions.assertEquals("Miss", Game.getLastOutput());
     }
 
     @Test
@@ -69,7 +68,7 @@ public class GameTests {
         // When
         Game.makeGuess(new Coordinates(0, 4));
         // Then
-        assertEquals('0', playerService.getPlayerGameBoard()[0][4]);
+        Assertions.assertEquals('0', playerService.getPlayerGameBoard()[0][4]);
     }
 
     @Test
@@ -78,7 +77,7 @@ public class GameTests {
         Game.makeGuess(new Coordinates(0, 4));
         Game.makeGuess(new Coordinates(0, 4));
         // Then
-        assertEquals("You've already shot at these coordinates", Game.getLastOutput());
+        Assertions.assertEquals("You've already shot at these coordinates", Game.getLastOutput());
     }
 
     @Test
@@ -86,10 +85,10 @@ public class GameTests {
         // When
         Ship battleship = new Battleship();
         ShipService.lockShipPlacement(battleship, new Coordinates(0, 0), Direction.HORIZONTAL);
-        Game.listOfPlacedShips = ShipService.getShips();
+        Game.listOfPlacedShips = ShipService.getActiveShips();
         // THen
         Game.makeGuess(new Coordinates(0, 0));
-        assertEquals("Hit", Game.getLastOutput());
+        Assertions.assertEquals("Hit", Game.getLastOutput());
     }
 
     @Test
@@ -99,14 +98,14 @@ public class GameTests {
         Ship destroyer = new Destroyer();
         ShipService.placeShip(destroyer);
         ShipService.lockShipPlacement(battleship, new Coordinates(0, 0), Direction.HORIZONTAL);
-        Game.listOfPlacedShips = ShipService.getShips();
+        Game.listOfPlacedShips = ShipService.getActiveShips();
         // Then
         Game.makeGuess(new Coordinates(0, 0));
         Game.makeGuess(new Coordinates(0, 1));
         Game.makeGuess(new Coordinates(0, 2));
         Game.makeGuess(new Coordinates(0, 3));
         Game.makeGuess(new Coordinates(0, 4));
-        assertEquals("Sink", Game.getLastOutput());
+        Assertions.assertEquals("Sink", Game.getLastOutput());
 
     }
 
@@ -115,14 +114,14 @@ public class GameTests {
         // When
         Ship battleship = new Battleship();
         ShipService.lockShipPlacement(battleship, new Coordinates(5, 5), Direction.VERTICAL);
-        Game.listOfPlacedShips = ShipService.getShips();
+        Game.listOfPlacedShips = ShipService.getActiveShips();
         Game.makeGuess(new Coordinates(5, 5));
         Game.makeGuess(new Coordinates(6, 5));
         Game.makeGuess(new Coordinates(7, 5));
         Game.makeGuess(new Coordinates(8, 5));
         Game.makeGuess(new Coordinates(9, 5));
         // Then
-        assertTrue(Game.listOfPlacedShips.isEmpty());
+        Assertions.assertTrue(Game.listOfPlacedShips.isEmpty());
     }
 
 }
