@@ -1,7 +1,16 @@
-import Ships.Battleship;
-import Ships.Destroyer;
-import Ships.Ship;
+import game.Coordinates;
+import game.Direction;
+import game.Game;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import services.PlayerService;
+import services.ShipService;
+import ships.Battleship;
+import ships.Destroyer;
+import ships.Ship;
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -10,10 +19,8 @@ import static org.junit.Assert.assertEquals;
 
 public class PlacementTests {
 
-    private final ShipService shipService = new ShipService();
     private final PlayerService playerService = new PlayerService();
     private final Game game = new Game();
-
 
     @Test
     public void enemyBoardIsInitiated() {
@@ -40,17 +47,17 @@ public class PlacementTests {
         Coordinates coords = new Coordinates(2, 2);
         ShipService.lockShipPlacement(battleship, coords, Direction.HORIZONTAL);
         // Then
-        assertEquals(playerService.getEnemyGameBoard()[2][2], 'X');
+        assertEquals('X', playerService.getEnemyGameBoard()[2][2]);
     }
 
     @Test
     public void shipCannotBePlacedInDeadZone() {
         // When
         Destroyer destroyer = new Destroyer();
-        Coordinates coords = new Coordinates(9, 9);
+        Coordinates coords = new Coordinates(8, 9);
         // Then
-        Direction direction = ShipService.validateShipPosition(coords, destroyer.getShipLength());
-        assertEquals(direction, Direction.NEITHER);
+        Direction direction = ShipService.determineLegalPlacementDirection(coords, destroyer.getShipLength());
+        assertEquals(Direction.NEITHER, direction);
     }
 
     @Test
@@ -65,8 +72,8 @@ public class PlacementTests {
         ShipService.lockShipPlacement(battleship2, coords2, Direction.VERTICAL);
         // Then
         Coordinates coords3 = new Coordinates(1, 3);
-        Direction destroyerDirection = ShipService.validateShipPosition(coords3, destroyer.getShipLength());
-        assertEquals(destroyerDirection, Direction.NEITHER);
+        Direction destroyerDirection = ShipService.determineLegalPlacementDirection(coords3, destroyer.getShipLength());
+        assertEquals(Direction.NEITHER, destroyerDirection);
     }
 
     @Test
@@ -82,20 +89,24 @@ public class PlacementTests {
         ShipService.lockShipPlacement(battleship2, coords2, Direction.HORIZONTAL);
         ShipService.lockShipPlacement(destroyer, coords3, Direction.VERTICAL);
         // Then
-        assertEquals(ShipService.getActiveShips().size(), 3);
+        assertEquals(3, ShipService.getActiveShips().size());
+
     }
 
     @Test
     public void allShipsCanBeRandomlyPlacedCorrectly() {
+        //todo test broken
         // When
         Ship battleship = new Battleship();
         Ship battleship2 = new Battleship();
         Ship destroyer = new Destroyer();
-        ShipService.placeShip(battleship);
-        ShipService.placeShip(battleship2);
-        ShipService.placeShip(destroyer);
+        ShipService.randomlyPlaceShip(battleship);
+        ShipService.randomlyPlaceShip(battleship2);
+        ShipService.randomlyPlaceShip(destroyer);
         // Then
-        assertEquals(ShipService.getActiveShips().size(), 3);
+        List<List<String>> listOfPlacedShips = ShipService.getActiveShips();
+        System.out.println(listOfPlacedShips.size());
+        assertEquals(3, ShipService.getActiveShips().size());
     }
 
 }

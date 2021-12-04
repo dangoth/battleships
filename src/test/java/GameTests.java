@@ -1,6 +1,12 @@
-import Ships.Battleship;
-import Ships.Destroyer;
-import Ships.Ship;
+import game.Coordinates;
+import game.Direction;
+import game.Game;
+import players.HumanPlayer;
+import services.PlayerService;
+import services.ShipService;
+import ships.Battleship;
+import ships.Destroyer;
+import ships.Ship;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.TestInstance;
@@ -96,7 +102,7 @@ public class GameTests {
         // When
         Ship battleship = new Battleship();
         Ship destroyer = new Destroyer();
-        ShipService.placeShip(destroyer);
+        ShipService.randomlyPlaceShip(destroyer);
         ShipService.lockShipPlacement(battleship, new Coordinates(0, 0), Direction.HORIZONTAL);
         Game.listOfPlacedShips = ShipService.getActiveShips();
         // Then
