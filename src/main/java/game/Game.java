@@ -55,13 +55,13 @@ public class Game {
             char colLetter = playerInput.charAt(0);
             int row = Integer.parseInt(playerInput.substring(1)) - 1;
             int col = colLetter - 'A';
-            HumanPlayer.gameBoard = makeGuess(new Coordinates(row, col));
+            HumanPlayer.gameBoard = processGuess(new Coordinates(row, col));
         } else {
             System.out.println("Invalid input, please try again.");
         }
     }
 
-    public static char[][] makeGuess(Coordinates guessedCoords) {
+    public static char[][] processGuess(Coordinates guessedCoords) {
         char[][] enemyGameBoard = playerService.getEnemyGameBoard();
         char[][] playerGameBoard = playerService.getPlayerGameBoard();
         int row = guessedCoords.getRow();
