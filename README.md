@@ -2,8 +2,8 @@
 
 To run:
 
-`cd ~/Battleships2/src/main/java/`
+`cd ~/Battleships2/src/main/`
 
-`javac game.Game.java`
+`javac Main.java`
 
-`java game.Game`
+`java Main`
