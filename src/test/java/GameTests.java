@@ -1,6 +1,9 @@
 import game.Coordinates;
 import game.Direction;
 import game.Game;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import players.EnemyPlayer;
 import players.HumanPlayer;
 import services.PlayerService;
 import services.ShipService;
@@ -9,70 +12,44 @@ import ships.Destroyer;
 import ships.Ship;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 
-@TestInstance(PER_CLASS)
 public class GameTests {
 
-    private final Game game = new Game();
-    private final ShipService shipService = new ShipService();
-    private final PlayerService playerService = new PlayerService();
+    Game game = null;
+    PlayerService playerService = null;
+    ShipService shipService = null;
+    HumanPlayer humanPlayer = null;
+    EnemyPlayer enemyPlayer = null;
 
-    private static final String REGEX = "[A-J](10|[1-9])";
-
-    public Stream<Arguments> testCases() {
-        return Stream.of(
-                Arguments.of("", false, "empty string"),
-                Arguments.of("a", false, "single lowercase non-digit"),
-                Arguments.of("1", false, "single digit"),
-                Arguments.of("123", false, "integer"),
-                Arguments.of("abc", false, "string"),
-                Arguments.of("a1", false, "lowercase row letter"),
-                Arguments.of("A1", true, "valid lower-bound coordinates"),
-                Arguments.of("A10", true, "valid upper-bound column coordinates"),
-                Arguments.of("J1", true, "valid upper-bound row coordinates"),
-                Arguments.of("J10", true, "valid upper-bound coordinates"),
-                Arguments.of("A11", false, "invalid column"),
-                Arguments.of("M5", false, "invalid row"),
-                Arguments.of("X23", false, "invalid column and row"),
-                Arguments.of("A-1", false, "negative column"),
-                Arguments.of("C3", true, "valid coordinates")
-        );
-    }
-
-    @ParameterizedTest(name = "{index} ==> {2}: is {0} valid coordinates? {1}")
-    @MethodSource("testCases")
-    public void testRegex(String input, boolean expected, String description) {
-        Boolean matches = input.matches(REGEX);
-        Assertions.assertEquals(expected, matches);
+    @Before
+    public void setUp() {
+        game = new Game();
+        playerService = game.getPlayerService();
+        shipService = game.getShipService();
+        humanPlayer = playerService.getHumanPlayer();
+        enemyPlayer = playerService.getEnemyPlayer();
     }
 
     @Test
     public void playerBoardIsInitiatedCorrectly() {
-        assertThat(HumanPlayer.gameBoard, notNullValue());
+        assertThat(humanPlayer.gameBoard, notNullValue());
     }
 
     @Test
     public void playerCanMakeAGuess() {
         // When
-        Game.processGuess(new Coordinates(0, 4));
+        game.processGuess(new Coordinates(0, 4), playerService);
         // Then
-        Assertions.assertEquals("Miss", Game.getLastOutput());
+        Assertions.assertEquals("Miss", game.getLastOutput());
     }
 
     @Test
     public void playerBoardIsUpdatedWhenGuessed() {
         // When
-        Game.processGuess(new Coordinates(0, 4));
+        game.processGuess(new Coordinates(0, 4), playerService);
         // Then
         Assertions.assertEquals('0', playerService.getPlayerGameBoard()[0][4]);
     }
@@ -80,21 +57,21 @@ public class GameTests {
     @Test
     public void guessingTheSameFieldTwiceShowsMessage() {
         // When
-        Game.processGuess(new Coordinates(0, 4));
-        Game.processGuess(new Coordinates(0, 4));
+        game.processGuess(new Coordinates(0, 4), playerService);
+        game.processGuess(new Coordinates(0, 4), playerService);
         // Then
-        Assertions.assertEquals("You've already shot at these coordinates", Game.getLastOutput());
+        Assertions.assertEquals("You've already shot at these coordinates", game.getLastOutput());
     }
 
     @Test
     public void shipCanBeHit() {
         // When
         Ship battleship = new Battleship();
-        ShipService.lockShipPlacement(battleship, new Coordinates(0, 0), Direction.HORIZONTAL);
-        Game.listOfPlacedShips = ShipService.getActiveShips();
+        shipService.lockShipPlacement(battleship, new Coordinates(0, 0), Direction.HORIZONTAL);
+        game.listOfPlacedShips = shipService.getActiveShips();
         // THen
-        Game.processGuess(new Coordinates(0, 0));
-        Assertions.assertEquals("Hit", Game.getLastOutput());
+        game.processGuess(new Coordinates(0, 0), playerService);
+        Assertions.assertEquals("Hit", game.getLastOutput());
     }
 
     @Test
@@ -102,16 +79,16 @@ public class GameTests {
         // When
         Ship battleship = new Battleship();
         Ship destroyer = new Destroyer();
-        ShipService.randomlyPlaceShip(destroyer);
-        ShipService.lockShipPlacement(battleship, new Coordinates(0, 0), Direction.HORIZONTAL);
-        Game.listOfPlacedShips = ShipService.getActiveShips();
+        enemyPlayer.gameBoard = shipService.randomlyPlaceShip(destroyer);
+        enemyPlayer.gameBoard = shipService.lockShipPlacement(battleship, new Coordinates(0, 0), Direction.HORIZONTAL);
+        game.listOfPlacedShips = shipService.getActiveShips();
         // Then
-        Game.processGuess(new Coordinates(0, 0));
-        Game.processGuess(new Coordinates(0, 1));
-        Game.processGuess(new Coordinates(0, 2));
-        Game.processGuess(new Coordinates(0, 3));
-        Game.processGuess(new Coordinates(0, 4));
-        Assertions.assertEquals("Sink", Game.getLastOutput());
+        playerService.setPlayerGameBoard(game.processGuess(new Coordinates(0, 0), playerService));
+        playerService.setPlayerGameBoard(game.processGuess(new Coordinates(0, 1), playerService));
+        playerService.setPlayerGameBoard(game.processGuess(new Coordinates(0, 2), playerService));
+        playerService.setPlayerGameBoard(game.processGuess(new Coordinates(0, 3), playerService));
+        playerService.setPlayerGameBoard(game.processGuess(new Coordinates(0, 4), playerService));
+        Assertions.assertEquals("Sink", game.getLastOutput());
 
     }
 
@@ -119,15 +96,15 @@ public class GameTests {
     public void gameCanBeWon() {
         // When
         Ship battleship = new Battleship();
-        ShipService.lockShipPlacement(battleship, new Coordinates(5, 5), Direction.VERTICAL);
-        Game.listOfPlacedShips = ShipService.getActiveShips();
-        Game.processGuess(new Coordinates(5, 5));
-        Game.processGuess(new Coordinates(6, 5));
-        Game.processGuess(new Coordinates(7, 5));
-        Game.processGuess(new Coordinates(8, 5));
-        Game.processGuess(new Coordinates(9, 5));
+        shipService.lockShipPlacement(battleship, new Coordinates(5, 5), Direction.VERTICAL);
+        game.listOfPlacedShips = shipService.getActiveShips();
+        game.processGuess(new Coordinates(5, 5), playerService);
+        game.processGuess(new Coordinates(6, 5), playerService);
+        game.processGuess(new Coordinates(7, 5), playerService);
+        game.processGuess(new Coordinates(8, 5), playerService);
+        game.processGuess(new Coordinates(9, 5), playerService);
         // Then
-        Assertions.assertTrue(Game.listOfPlacedShips.isEmpty());
+        Assertions.assertTrue(game.listOfPlacedShips.isEmpty());
     }
 
 }

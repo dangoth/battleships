@@ -4,7 +4,7 @@ import java.util.stream.IntStream;
 
 public class EnemyPlayer {
 
-    public static char[][] gameBoard;
+    public char[][] gameBoard;
 
     public EnemyPlayer() {
         gameBoard = new char[10][];
@@ -12,8 +12,8 @@ public class EnemyPlayer {
                 .forEach(i -> gameBoard[i] = new char[]{'0', '0', '0', '0', '0', '0', '0', '0', '0', '0'});
     }
 
-    public static char[][] getGameBoard() {
-        return gameBoard;
+    public char[][] getGameBoard() {
+        return this.gameBoard;
     }
 
 }

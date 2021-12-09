@@ -1,5 +1,6 @@
 package game;
 
+import players.EnemyPlayer;
 import players.HumanPlayer;
 import services.PlayerService;
 import services.ShipService;
@@ -13,55 +14,66 @@ import java.util.Scanner;
 
 public class Game {
 
-    private static PlayerService playerService;
-    private static ShipService shipService;
-    public static List<List<String>> listOfPlacedShips;
-    private static final LinkedList<String> stdoutHistory = new LinkedList<String>();
+    private final PlayerService playerService;
+    private final ShipService shipService;
+    public List<List<String>> listOfPlacedShips;
+    private final LinkedList<String> stdoutHistory = new LinkedList<String>();
 
     public Game() {
         playerService = new PlayerService();
-        shipService = new ShipService();
+        shipService = new ShipService(playerService);
     }
 
-    public static void play() {
+    public PlayerService getPlayerService() {
+        return playerService;
+    }
+
+    public ShipService getShipService() {
+        return shipService;
+    }
+
+    public void play() {
         Scanner scanner = new Scanner(System.in);
         setUpGame();
         playerService.printPlayerGameBoard();
-        while (!ShipService.getActiveShips().isEmpty()) {
-            listOfPlacedShips = ShipService.getActiveShips();
-            getCoordinatesInput(scanner);
+        while (!shipService.getActiveShips().isEmpty()) {
+            listOfPlacedShips = shipService.getActiveShips();
+            Coordinates coords = getCoordinatesInput(scanner);
+            processGuess(coords, playerService);
         }
         System.out.println("You've won the game!");
     }
 
-    public static void setUpGame() {
+    public void setUpGame() {
         Ship[] newShips = createBattleshipAndTwoDestroyers();
         for (Ship s : newShips) {
-            ShipService.randomlyPlaceShip(s);
+            shipService.randomlyPlaceShip(s);
         }
     }
 
-    public static Ship[] createBattleshipAndTwoDestroyers() {
+    public Ship[] createBattleshipAndTwoDestroyers() {
         Battleship battleship = new Battleship();
         Destroyer destroyer = new Destroyer();
         Destroyer destroyer2 = new Destroyer();
         return new Ship[]{battleship, destroyer, destroyer2};
     }
 
-    public static void getCoordinatesInput(Scanner scanner) {
+    public Coordinates getCoordinatesInput(Scanner scanner) {
         System.out.println("Input coordinates: ");
         String playerInput = scanner.next();
         if (playerInput.matches("[A-J](10|[1-9])")) {
             char colLetter = playerInput.charAt(0);
             int row = Integer.parseInt(playerInput.substring(1)) - 1;
             int col = colLetter - 'A';
-            HumanPlayer.gameBoard = processGuess(new Coordinates(row, col));
+            return new Coordinates(row, col);
         } else {
             System.out.println("Invalid input, please try again.");
+            getCoordinatesInput(scanner);
         }
+        return null;
     }
 
-    public static char[][] processGuess(Coordinates guessedCoords) {
+    public char[][] processGuess(Coordinates guessedCoords, PlayerService playerService) {
         char[][] enemyGameBoard = playerService.getEnemyGameBoard();
         char[][] playerGameBoard = playerService.getPlayerGameBoard();
         int row = guessedCoords.getRow();
@@ -91,7 +103,7 @@ public class Game {
         return playerGameBoard;
     }
 
-    public static void outputShotResult(String shotResult) {
+    public void outputShotResult(String shotResult) {
         if (shotResult.equals("Already shot")) {
             playerService.printPlayerGameBoard();
             printAndStore("You've already shot at these coordinates");
@@ -101,7 +113,7 @@ public class Game {
         }
     }
 
-    public static boolean strikeShip(Coordinates coords) {
+    public boolean strikeShip(Coordinates coords) {
         String hitCoords = String.valueOf(coords.getRow()) + coords.getColumn();
         for (List<String> placedShip : listOfPlacedShips) {
             if (placedShip.contains(hitCoords)) {
@@ -115,12 +127,12 @@ public class Game {
         return false;
     }
 
-    public static void printAndStore(String s) {
+    public void printAndStore(String s) {
         System.out.println(s);
         stdoutHistory.add(s);
     }
 
-    public static String getLastOutput() {
+    public String getLastOutput() {
         String last = stdoutHistory.get(stdoutHistory.size() - 1);
         return last;
     }

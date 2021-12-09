@@ -6,11 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="7c6c01c7-6373-4c37-845b-1781c7e549a9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/EnemyPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EnemyPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/PlayerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/PlayerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ShipService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ShipService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/players/EnemyPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/players/EnemyPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/players/HumanPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/players/HumanPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/PlayerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/PlayerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/ShipService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/ShipService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/GameTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/GameTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/PlacementTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/PlacementTests.java" afterDir="false" />
     </list>
@@ -43,13 +43,6 @@
     <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.runner" />
   </component>
   <component name="RunManager" selected="JUnit.PlacementTests">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="battleships2" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="GameTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="battleships2" />
       <option name="PACKAGE_NAME" value="" />
@@ -69,6 +62,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="GameTests.playerCanMakeAGuess" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="battleships2" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="GameTests" />
+      <option name="METHOD_NAME" value="playerCanMakeAGuess" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameTests.shipCanBeSunk" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="battleships2" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="GameTests" />
+      <option name="METHOD_NAME" value="shipCanBeSunk" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="PlacementTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="battleships2" />
       <option name="PACKAGE_NAME" value="" />
@@ -78,23 +91,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PlacementTests.allShipsCanBePlacedCorrectly" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="battleships2" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="PlacementTests" />
-      <option name="METHOD_NAME" value="allShipsCanBePlacedCorrectly" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.PlacementTests" />
         <item itemvalue="JUnit.GameTests" />
-        <item itemvalue="JUnit.PlacementTests.allShipsCanBePlacedCorrectly" />
+        <item itemvalue="JUnit.GameTests.shipCanBeSunk" />
         <item itemvalue="JUnit.GameTests.playerBoardIsUpdatedWhenGuessed" />
-        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.GameTests.playerCanMakeAGuess" />
       </list>
     </recent_temporary>
   </component>
