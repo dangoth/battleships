@@ -89,7 +89,6 @@ public class GameTests {
         playerService.setPlayerGameBoard(game.processGuess(new Coordinates(0, 3), playerService));
         playerService.setPlayerGameBoard(game.processGuess(new Coordinates(0, 4), playerService));
         Assertions.assertEquals("Sink", game.getLastOutput());
-
     }
 
     @Test
