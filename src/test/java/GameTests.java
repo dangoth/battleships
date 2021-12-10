@@ -2,9 +2,7 @@ import game.Coordinates;
 import game.Direction;
 import game.Game;
 import org.junit.Before;
-import org.junit.BeforeClass;
-import players.EnemyPlayer;
-import players.HumanPlayer;
+import players.Player;
 import services.PlayerService;
 import services.ShipService;
 import ships.Battleship;
@@ -21,8 +19,8 @@ public class GameTests {
     Game game = null;
     PlayerService playerService = null;
     ShipService shipService = null;
-    HumanPlayer humanPlayer = null;
-    EnemyPlayer enemyPlayer = null;
+    Player humanPlayer = null;
+    Player enemyPlayer = null;
 
     @Before
     public void setUp() {

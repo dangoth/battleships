@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7c6c01c7-6373-4c37-845b-1781c7e549a9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/players/EnemyPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/players/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/players/HumanPlayer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/PlayerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/PlayerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/ShipService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/ShipService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/GameTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/GameTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -34,9 +40,10 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.runner" />
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.GameTests">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="battleships2" />
@@ -49,16 +56,6 @@
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="GameTests" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GameTests.playerBoardIsUpdatedWhenGuessed" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="battleships2" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="GameTests" />
-      <option name="METHOD_NAME" value="playerBoardIsUpdatedWhenGuessed" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -82,13 +79,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="PlacementTests.enemyBoardIsUpdatedOnShipPlacement" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="battleships2" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="PlacementTests" />
+      <option name="METHOD_NAME" value="enemyBoardIsUpdatedOnShipPlacement" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.PlacementTests" />
         <item itemvalue="JUnit.GameTests" />
+        <item itemvalue="JUnit.PlacementTests" />
+        <item itemvalue="JUnit.PlacementTests.enemyBoardIsUpdatedOnShipPlacement" />
+        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.GameTests.shipCanBeSunk" />
-        <item itemvalue="JUnit.GameTests.playerBoardIsUpdatedWhenGuessed" />
       </list>
     </recent_temporary>
   </component>
@@ -102,5 +109,12 @@
       <updated>1638352416663</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="players.Player" memberName="gameBoard" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
 </project>

@@ -1,7 +1,6 @@
 package services;
 
-import players.EnemyPlayer;
-import players.HumanPlayer;
+import players.Player;
 
 import java.io.PrintStream;
 import java.util.stream.IntStream;
@@ -11,20 +10,20 @@ public class PlayerService {
     private final PrintStream printStream;
     private final int boardSize = 10;
     private final char[] alphabet = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
-    private EnemyPlayer enemyPlayer;
-    private HumanPlayer humanPlayer;
+    private final Player humanPlayer;
+    private final Player enemyPlayer;
 
     public PlayerService() {
-        enemyPlayer = new EnemyPlayer();
-        humanPlayer = new HumanPlayer();
+        humanPlayer = new Player();
+        enemyPlayer = new Player();
         printStream = new PrintStream(System.out);
     }
 
-    public HumanPlayer getHumanPlayer() {
+    public Player getHumanPlayer() {
         return humanPlayer;
     }
 
-    public EnemyPlayer getEnemyPlayer() {
+    public Player getEnemyPlayer() {
         return enemyPlayer;
     }
 
@@ -34,10 +33,6 @@ public class PlayerService {
 
     public char[][] getPlayerGameBoard() {
         return humanPlayer.getGameBoard();
-    }
-
-    public void setEnemyGameBoard(char[][] board) {
-        enemyPlayer.gameBoard = board;
     }
 
     public void setPlayerGameBoard(char[][] board) {

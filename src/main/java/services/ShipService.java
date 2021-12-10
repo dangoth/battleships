@@ -2,7 +2,7 @@ package services;
 
 import game.Coordinates;
 import game.Direction;
-import players.EnemyPlayer;
+import players.Player;
 import ships.Ship;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ public class ShipService {
     private Random rand;
     private final int boardSize = 10;
     private List<List<String>> ships;
-    private EnemyPlayer enemyPlayer;
+    private Player enemyPlayer;
     private PlayerService playerService;
 
     public ShipService(PlayerService playerService) {

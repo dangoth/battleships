@@ -1,7 +1,5 @@
 package game;
 
-import players.EnemyPlayer;
-import players.HumanPlayer;
 import services.PlayerService;
 import services.ShipService;
 import ships.Battleship;
@@ -80,7 +78,7 @@ public class Game {
         int col = guessedCoords.getColumn();
 
         char unusedCoords = '-';
-        char miss = '0';
+        char miss = '-';
         char hit = 'X';
 
         if (playerGameBoard[row][col] != unusedCoords) {
